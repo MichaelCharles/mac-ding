@@ -1,0 +1,25 @@
+#!/usr/local/bin/python3
+
+import os
+from playsound import playsound
+import subprocess
+
+dirname = os.path.dirname(__file__)
+sound_filename = os.path.join(dirname, 'bell.mp3')
+
+was_muted = "true" in str(subprocess.check_output(['osascript', '-e', 'output muted of (get volume settings)']))
+
+def mute_my_mac():
+  str(subprocess.check_output(['osascript', '-e', 'set volume output muted true']))
+
+def unmute_my_mac():
+  str(subprocess.check_output(['osascript', '-e', 'set volume output muted false']))
+
+
+if was_muted:
+  unmute_my_mac()
+
+playsound(sound_filename)
+
+if was_muted:
+  mute_my_mac()
